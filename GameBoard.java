@@ -108,43 +108,20 @@ public class GameBoard extends JFrame {
             }
         }
     }
-    boolean isTurnable(int x, int y){
-        return gameField[x][y] == nullSymbol;
+    boolean isTurnable(int row, int cell){
+        return gameField[row][cell] == nullSymbol;
     }
-    void updateGameField(int x, int y){
-        gameField[x][y] = game.getCurrentPlayer().getPlayerSign();
+    void updateGameField(int row, int cell){
+        gameField[row][cell] = game.getCurrentPlayer().getPlayerSign();
     }
 
     boolean checkDiagonal(char elem) {
-        boolean checker1 = true;
-        boolean checker2 = true;
-
-        for (int i = 0, j = 0; i < dimension; i++, j++) {
-            if (gameField[i][j] != elem) {
-                checker1 = false;
-            }
-            if (gameField[i][dimension - j - 1] != elem) {
-                checker2 = false;
-            }
-        }
-        return checker1 || checker2;
+        return (countDiagonal(elem, 1) == dimension) || (countDiagonal(elem, 2) == dimension);
     }
     boolean checkRowColumn(char elem) {
-        boolean checker1;
-        boolean checker2;
 
         for (int i = 0; i < dimension; i++) {
-            checker1 = true;
-            checker2 = true;
-            for (int j = 0; j < dimension; j++) {
-                if (gameField[i][j] != elem) {
-                    checker1 = false;
-                }
-                if (gameField[j][i] != elem) {
-                    checker2 = false;
-                }
-            }
-            if (checker1 || checker2) {
+            if (countRow(elem, i) == dimension || countColumn(elem, i) == dimension) {
                 return true;
             }
         }
